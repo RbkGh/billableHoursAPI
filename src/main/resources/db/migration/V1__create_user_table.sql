@@ -63,7 +63,7 @@ CREATE TABLE `users_roles`
   KEY `ur_key2` (`user_id`),
   CONSTRAINT `ur_key1`
     FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `ur_key1`
+  CONSTRAINT `ur_key2`
     FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) on delete cascade
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
