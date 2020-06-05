@@ -23,4 +23,6 @@ class Role(
         @JoinTable(name = "roles_privileges", joinColumns = arrayOf(JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)), inverseJoinColumns = arrayOf(JoinColumn(name = "privilege_id", referencedColumnName = "id", nullable = false)))
         @ManyToMany
         val privilegeList: List<Privilege>
-)
+){
+
+}

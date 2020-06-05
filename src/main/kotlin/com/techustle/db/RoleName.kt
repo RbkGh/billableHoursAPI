@@ -11,6 +11,22 @@ import com.fasterxml.jackson.annotation.JsonFormat
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 enum class RoleName(val roleDescription: String) {
-    ROLE_LAWYER("Lawyer"),
-    ROLE_FINANCE_ADMIN("Finance Admin");
+    ROLE_LAWYER("ROLE_LAWYER"),
+    ROLE_FINANCE_ADMIN("ROLE_LAWYER");
+
+    companion object {
+        @JvmStatic
+        fun getFriendlyRoleName(roleName: RoleName): String {
+            var friendlyRoleName: String;
+            when (roleName) {
+                ROLE_LAWYER -> {
+                    friendlyRoleName = "Lawyer"
+                }
+                ROLE_FINANCE_ADMIN -> {
+                    friendlyRoleName = "Finance Admin"
+                }
+            }
+            return friendlyRoleName
+        }
+    }
 }

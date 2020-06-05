@@ -16,7 +16,7 @@ class User (
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long? = null,
+    var id: Long ,
     var email: String,
     var dateCreated: Date,
     var password: ByteArray,
