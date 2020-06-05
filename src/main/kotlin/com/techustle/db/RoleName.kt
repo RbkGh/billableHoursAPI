@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 enum class RoleName(val roleDescription: String) {
     ROLE_LAWYER("ROLE_LAWYER"),
-    ROLE_FINANCE_ADMIN("ROLE_LAWYER");
+    ROLE_FINANCE_ADMIN("ROLE_FINANCE_ADMIN");
 
     companion object {
         @JvmStatic
