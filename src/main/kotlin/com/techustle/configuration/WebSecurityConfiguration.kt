@@ -5,9 +5,13 @@ import com.techustle.security.CustomUserDetailsService
 import com.techustle.security.JWTSecurityAuthenticationEntryPoint
 import com.techustle.security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -25,6 +29,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
  * Time: 16:00
  *
  */
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 class WebSecurityConfiguration(private val customUserDetailsService: CustomUserDetailsService,
                                private val unauthorizedHandler: JWTSecurityAuthenticationEntryPoint) : WebSecurityConfigurerAdapter() {
 
@@ -70,7 +77,7 @@ class WebSecurityConfiguration(private val customUserDetailsService: CustomUserD
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/v1/auth/**")
+                .antMatchers("/api/v1/auth/**","/app/**")
                 .permitAll()
                 .antMatchers("/api/v1/user/checkUsernameAvailability",
                         "/api/user/checkEmailAvailability")
@@ -108,4 +115,8 @@ class WebSecurityConfiguration(private val customUserDetailsService: CustomUserD
         return source
     }
 
+    @Bean
+    override fun authenticationManager(): AuthenticationManager {
+        return super.authenticationManager()
+    }
 }

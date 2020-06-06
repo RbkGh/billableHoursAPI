@@ -9,6 +9,5 @@ package com.techustle.db
  */
 enum class Sex(val sexType:Int) {
     MALE(1),
-    FEMALE(2),
-    OTHER(3)
+    FEMALE(2)
 }

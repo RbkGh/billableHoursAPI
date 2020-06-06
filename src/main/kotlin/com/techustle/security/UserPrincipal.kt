@@ -1,11 +1,11 @@
 package com.techustle.security
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.techustle.db.Role
 import com.techustle.db.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.*
 import java.util.stream.Collectors
 
 /**
@@ -18,7 +18,7 @@ import java.util.stream.Collectors
 class UserPrincipal(private var id: Long,
                     private var name: String,
                     private var userName: String,
-                    @JsonIgnore private var email: String,
+                    private var email: String,
                     private var passwordString: String,
                     private var authorities: List<GrantedAuthority>,
                     private var user: User) : UserDetails {
@@ -71,6 +71,18 @@ class UserPrincipal(private var id: Long,
 
     fun getEmail(): String {
         return email
+    }
+
+    override fun equals(o: Any?): Boolean {
+        if (this === o) return true
+        if (o == null || javaClass != o.javaClass) return false
+        val that: UserPrincipal = o as UserPrincipal
+        return id == that.id
+    }
+
+
+    override fun hashCode(): Int {
+        return Objects.hash(id)
     }
 
 }

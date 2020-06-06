@@ -35,6 +35,20 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    implementation("org.hibernate.validator:hibernate-validator:6.0.2.Final")
+    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:6.0.2.Final")
+//    <dependency>
+//    <groupId>javax.el</groupId>
+//    <artifactId>javax.el-api</artifactId>
+//    <version>3.0.0</version>
+//    </dependency>
+//
+//    <dependency>
+//    <groupId>org.glassfish.web</groupId>
+//    <artifactId>javax.el</artifactId>
+//    <version>2.2.6</version>
+//    </dependency>
+
     runtimeOnly("mysql:mysql-connector-java")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
@@ -42,6 +56,13 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+
+//    testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
+//    testCompile("org.junit.jupiter:junit-jupiter-params:5.2.0")
+//    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
+//    testCompile("org.mockito:mockito-core:2.+")
+//    testCompile("org.mockito:mockito-junit-jupiter:2.18.3")
+
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("com.h2database:h2:1.4.194")
 }

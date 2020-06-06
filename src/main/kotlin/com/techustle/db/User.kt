@@ -23,7 +23,7 @@ class User (
     var firstName: String,
     var surName: String,
     var dateOfBirth: Date,
-    var sex: Sex,
+    //var sex: Sex,
     var accountActive: Boolean = true,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",joinColumns = arrayOf(JoinColumn(name="user_id",referencedColumnName = "id")),
