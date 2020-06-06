@@ -43,10 +43,6 @@ class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body<Any>(ErrorResponse("Your Password is incorrect"))
     }
 
-    @GetMapping("hi")
-    fun hello(): String {
-        return "hi"
-    }
 }
 
 

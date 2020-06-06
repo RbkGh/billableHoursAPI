@@ -21,10 +21,15 @@ class EmployeeWorkLog(
         @GeneratedValue(strategy = GenerationType.AUTO)
         private var id: Long,
 
-        private var billableRate: Int,
+        @JoinColumn(name = "user_id", referencedColumnName = "id")
+        @ManyToOne
+        private var user : User,
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "employeeWorkLog")
-        private var companyList: List<Company>,
+        private var billableRate: BigDecimal,
+
+        @JoinColumn(name = "company_id", referencedColumnName = "id")
+        @ManyToOne
+        private var company: Company,
 
         @Column(name = "date_of_day", nullable = false)
         private var dateOfDay: Date,

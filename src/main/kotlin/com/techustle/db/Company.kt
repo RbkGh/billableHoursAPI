@@ -20,7 +20,6 @@ class Company(
         private var companyName: String,
 
 
-        @JoinColumn(name = "employee_work_log_id", referencedColumnName = "id")
-        @ManyToOne(optional = false)
-        private var employeeWorkLog:EmployeeWorkLog
+        @OneToMany(cascade = [CascadeType.ALL],mappedBy = "company")
+        private var employeeWorkLogList: List<EmployeeWorkLog>
 )
