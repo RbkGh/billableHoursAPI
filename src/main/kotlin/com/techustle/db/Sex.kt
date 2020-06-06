@@ -1,5 +1,7 @@
 package com.techustle.db
 
+import com.fasterxml.jackson.annotation.JsonFormat
+
 /**
  *
  * author: acerbk
@@ -7,6 +9,7 @@ package com.techustle.db
  * Time: 03:55
  *
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 enum class Sex(val sexType:Int) {
     MALE(1),
     FEMALE(2)
