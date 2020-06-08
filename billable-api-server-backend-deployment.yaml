@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billable-api-server-backend-deployment
+  labels:
+    app: billable-api-server-backend
+spec:
+  replicas: 3
+  #  strategy:
+  #    type: RollingUpdate
+  #    rollingUpdate:
+  #      maxSurge: 1
+  #      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: billable-api-server-backend
+  template:
+    metadata:
+      labels:
+        app: billable-api-server-backend
+        tier: backend
+    spec:
+      terminationGracePeriodSeconds: 31
+      containers:
+        - name: billable-api-server-backend
+          image: dockerrodneykb2/billable-api-server-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: billable-api-server-backend-docker-credentials
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: billable-api-server-backend-service
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: billable-api-server-backend
+    tier: backend
+  type: LoadBalancer
+#  use type NodePort when configuring with GKE,you can use ClusterIP with AWSKubernetes

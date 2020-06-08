@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: billable-api-server-backend-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    #    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    kubernetes.io/ingress.global-static-ip-name: "billable-api-public-ip-ca"
+    #static ip name when using in gke
+
+spec:
+  #  tls:
+  #    - secretName: tls-secret
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: billable-web-frontend-service
+              servicePort: 8888
+            path: /
+          - backend:
+              serviceName: billable-api-server-backend-service
+              servicePort: 8080
+            path: /billablehours-api
