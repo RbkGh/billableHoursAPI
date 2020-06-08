@@ -6,12 +6,13 @@ import com.techustle.db.repository.CompanyRepository
 import com.techustle.db.repository.EmployeeWorkLogRepository
 import com.techustle.db.repository.UserRepository
 import com.techustle.models.EmployeeWorkLogRequest
+import org.joda.time.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.sql.Timestamp
-import java.time.Period
 import java.time.ZoneId
+import java.util.*
 
 
 /**
@@ -65,9 +66,12 @@ class LawyerService {
      * find difference in hours between two timestamps
      */
     fun findDifferenceInHours(startTime: Timestamp, endTime: Timestamp): Int {
-        val startLocalDate = startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-        val endLocaldDate = endTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-        val period = Period.between(startLocalDate, endLocaldDate)
-        return period.days / 3600
+
+        DateTimeZone.setDefault(DateTimeZone.UTC)
+
+        var diffInSeconds = (endTime.time - startTime.time) / 1000
+        var diffInHours = diffInSeconds / 3600
+
+        return diffInHours.toInt()
     }
 }
