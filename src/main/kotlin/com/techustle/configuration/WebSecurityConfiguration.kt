@@ -3,12 +3,14 @@ package com.techustle.configuration
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.common.collect.ImmutableList
-import com.techustle.db.repository.UserRepository
 import com.techustle.security.CustomUserDetailsService
 import com.techustle.security.JWTSecurityAuthenticationEntryPoint
 import com.techustle.security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar
+import org.springframework.format.support.DefaultFormattingConversionService
+import org.springframework.format.support.FormattingConversionService
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -25,6 +27,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import java.time.format.DateTimeFormatter
+
 
 /**
  *
@@ -132,4 +136,15 @@ class WebSecurityConfiguration(private val customUserDetailsService: CustomUserD
             }
         }
     }
+
+//    @Bean
+//    fun conversionService(): FormattingConversionService? {
+//        val conversionService = DefaultFormattingConversionService(false)
+//        val registrar = DateTimeFormatterRegistrar()
+//        registrar.setDateFormatter(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+//        registrar.setDateTimeFormatter(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+//        registrar.registerFormatters(conversionService)
+//        // other desired formatters
+//        return conversionService
+//    }
 }

@@ -6,12 +6,11 @@ import com.techustle.db.repository.CompanyRepository
 import com.techustle.db.repository.EmployeeWorkLogRepository
 import com.techustle.db.repository.UserRepository
 import com.techustle.models.EmployeeWorkLogRequest
-import org.joda.time.*
+import org.joda.time.DateTimeZone
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.sql.Timestamp
-import java.time.ZoneId
 import java.util.*
 
 
@@ -58,6 +57,19 @@ class LawyerService {
         employeeWorkLogRepository.save(employeeWorkLog)
     }
 
+    fun getLawyerWorkLogsForTimeRange(startDate: Date, endDate: Date, userID: Long): List<EmployeeWorkLog> {
+
+        val employeeWorkLogList: List<EmployeeWorkLog> =
+                employeeWorkLogRepository.findAllByDateOfDayBetween( startDate, endDate)
+
+        print("hi ther-----------------------")
+        for (emp in employeeWorkLogList){
+            print("\n emp id ---------------------${emp.id}")
+        }
+
+        return employeeWorkLogList
+    }
+
     fun isUserPresent(userID: Long): Boolean {
         return (userRepository.existsById(userID))
     }
@@ -69,7 +81,7 @@ class LawyerService {
 
         DateTimeZone.setDefault(DateTimeZone.UTC)
 
-        var diffInSeconds = (endTime.time - startTime.time) / 1000
+        var diffInSeconds: Long = (endTime.time - startTime.time) / 1000
         var diffInHours = diffInSeconds / 3600
 
         return diffInHours.toInt()

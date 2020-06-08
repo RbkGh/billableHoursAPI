@@ -3,6 +3,7 @@ package com.techustle.db.repository
 import com.techustle.db.EmployeeWorkLog
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import java.util.*
 
 /**
  *
@@ -13,4 +14,9 @@ import org.springframework.stereotype.Repository
  */
 @Repository
 interface EmployeeWorkLogRepository : CrudRepository<EmployeeWorkLog, Long> {
+
+    fun findAllByDateOfDayBetween(startDate: Date, endDate: Date):List<EmployeeWorkLog>
+
+
+
 }

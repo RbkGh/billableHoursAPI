@@ -21,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.MvcResult
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import java.math.BigDecimal
 import java.sql.Timestamp
@@ -57,6 +58,16 @@ class LawyerControllerTest {
     var userID: Long? = null
     var companyID: Long? = null
 
+
+//    companion object{
+//
+//        @BeforeTestClass
+//        @JvmStatic
+//        internal fun beforeAll(){
+//
+//        }
+//    }
+
     @Test
     fun `test lawyer bill record creation and expect 201 status code`() {
 
@@ -82,6 +93,41 @@ class LawyerControllerTest {
             header("Authorization", "Bearer $TOKEN")
         }.andExpect {
             status { isCreated }
+        }
+    }
+
+    @Test
+    fun `test lawyer timesheets expect 404 status code`() {
+//        initDBData()
+        getJWT()
+
+        mockMvc.get("/api/v1/lawyer/6780/timesheet") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+            param("startDate",Date().toString())
+            param("endDate",Date().toString())
+            header("Authorization", "Bearer $TOKEN")
+        }.andExpect {
+            status {
+                isNotFound
+            }
+        }
+    }
+
+    @Test
+    fun `test lawyer timesheets expect 200 status code`() {
+        getJWT()
+
+        mockMvc.get("/api/v1/lawyer/$userID/timesheet") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+            param("startDate",Date().toString())
+            param("endDate",Date().toString())
+            header("Authorization", "Bearer $TOKEN")
+        }.andExpect {
+            status {
+                isOk
+            }
         }
     }
 
@@ -171,6 +217,7 @@ class LawyerControllerTest {
 
         print("loginResponse*************************************" + loginResponse.token)
         TOKEN = loginResponse.token
+        userID = loginResponse.id
 
     }
 }
