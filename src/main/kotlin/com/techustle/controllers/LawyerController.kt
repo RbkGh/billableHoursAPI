@@ -60,4 +60,9 @@ class LawyerController {
         return ResponseEntity.status(HttpStatus.OK).body<Any>(lawyerLOGS)
     }
 
+    @GetMapping("/timesheet")
+    fun getAllLawyerTimeSheets():ResponseEntity<*>{
+        return ResponseEntity.ok().body<Any>(lawyerService.getAllLawyerWorkLogs())
+    }
+
 }

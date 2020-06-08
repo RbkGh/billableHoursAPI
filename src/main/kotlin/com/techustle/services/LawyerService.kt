@@ -60,7 +60,7 @@ class LawyerService {
     fun getLawyerWorkLogsForTimeRange(startDate: Date, endDate: Date, userID: Long): List<EmployeeWorkLog> {
 
         val employeeWorkLogList: List<EmployeeWorkLog> =
-                employeeWorkLogRepository.findAllByDateOfDayBetween( startDate, endDate)
+                employeeWorkLogRepository.findAllByUser_Id( userID)
 
         print("hi ther-----------------------")
         for (emp in employeeWorkLogList){
@@ -68,6 +68,10 @@ class LawyerService {
         }
 
         return employeeWorkLogList
+    }
+
+    fun getAllLawyerWorkLogs(): List<EmployeeWorkLog> {
+        return employeeWorkLogRepository.findAll().toList()
     }
 
     fun isUserPresent(userID: Long): Boolean {

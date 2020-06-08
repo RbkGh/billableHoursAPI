@@ -15,7 +15,7 @@ import javax.persistence.*
  */
 @Entity
 @Table(name = "employee_work_log")
-class EmployeeWorkLog(
+data class EmployeeWorkLog(
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

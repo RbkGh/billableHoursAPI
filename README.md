@@ -60,7 +60,7 @@ Content-Type: application/json
 ### Create Lawyer Billable Work Log
 >Request
 ```$xslt
-POST http://localhost:8080/api/v1/lawyer/1/bill
+POST http://localhost:8080/billablehours-api/api/v1/lawyer/1/bill
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -93,4 +93,164 @@ Date: Mon, 08 Jun 2020 04:41:02 GMT
 <Response body is empty>
 
 Response code: 201; Time: 229ms; Content length: 0 bytes
+```
+
+### Get Lawyer Billable Work Period Within Time Range (Week,Month or Whatever)
+> Request 
+```$xslt
+GET http://localhost:8080/billablehours-api/api/v1/lawyer/1/timesheet?startDate=2023-03-07&endDate=2023-03-07
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXd5ZXIxQGdtYWlsLmNvbSIsImlhdCI6MTU5MTU1ODg4MywiZXhwIjoxNTkyMTYzNjgzfQ.OKY-SJjgzmKAfKd0HbJyMIxWnJqsgnUayo2M2CDVWdSNzSzldOG8x3rGrrVBBl9K6Rjp_hGQWYFXLNOd2tqtpg
+
+```
+> Response 
+```$xslt
+GET http://localhost:8080/billablehours-api/api/v1/lawyer/1/timesheet?startDate=2023-03-07&endDate=2023-03-07
+
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 08 Jun 2020 16:56:40 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+[
+  {
+    "id": 1,
+    "user": {
+      "id": 1,
+      "email": "lawyer1@gmail.com",
+      "dateCreated": 1591592050000,
+      "firstName": "rodney",
+      "surName": "boachie",
+      "dateOfBirth": 1591574400000,
+      "accountActive": true,
+      "roleList": [
+        {
+          "id": 1,
+          "roleName": {
+            "roleDescription": "ROLE_LAWYER"
+          },
+          "privilegeList": []
+        }
+      ]
+    },
+    "billableRate": 300.00,
+    "company": {
+      "id": 1,
+      "companyName": "MTN"
+    },
+    "dateOfDay": 1591558792193,
+    "startTime": 1678174792000,
+    "endTime": 1678181992000,
+    "noOfHours": 2,
+    "durationCost": 600.00
+  }
+]
+```
+
+### Get All Lawyer Billable Work Period - Implemented Role Authorization Security such that Only Accessible By Finance Administrator Users
+
+> Request 
+```$xslt
+GET http://localhost:8080/billablehours-api/api/v1/lawyer/timesheet
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXd5ZXIxQGdtYWlsLmNvbSIsImlhdCI6MTU5MTU1ODg4MywiZXhwIjoxNTkyMTYzNjgzfQ.OKY-SJjgzmKAfKd0HbJyMIxWnJqsgnUayo2M2CDVWdSNzSzldOG8x3rGrrVBBl9K6Rjp_hGQWYFXLNOd2tqtpg
+
+```
+> Response 
+```$xslt
+GET http://localhost:8080/billablehours-api/api/v1/lawyer/timesheet
+
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 08 Jun 2020 16:56:40 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+[
+  {
+    "id": 1,
+    "user": {
+      "id": 1,
+      "email": "lawyer1@gmail.com",
+      "dateCreated": 1591592050000,
+      "firstName": "rodney",
+      "surName": "boachie",
+      "dateOfBirth": 1591574400000,
+      "accountActive": true,
+      "roleList": [
+        {
+          "id": 1,
+          "roleName": {
+            "roleDescription": "ROLE_LAWYER"
+          },
+          "privilegeList": []
+        }
+      ]
+    },
+    "billableRate": 300.00,
+    "company": {
+      "id": 1,
+      "companyName": "MTN"
+    },
+    "dateOfDay": 1591558792193,
+    "startTime": 1678174792000,
+    "endTime": 1678181992000,
+    "noOfHours": 2,
+    "durationCost": 600.00
+  },
+     {
+       "id": 2,
+       "user": {
+         "id": 1,
+         "email": "lawyer1@gmail.com",
+         "dateCreated": 1591592050000,
+         "firstName": "rodney",
+         "surName": "boachie",
+         "dateOfBirth": 1591574400000,
+         "accountActive": true,
+         "roleList": [
+           {
+             "id": 1,
+             "roleName": {
+               "roleDescription": "ROLE_LAWYER"
+             },
+             "privilegeList": []
+           }
+         ]
+       },
+       "billableRate": 300.00,
+       "company": {
+         "id": 1,
+         "companyName": "MTN"
+       },
+       "dateOfDay": 1591558792193,
+       "startTime": 1678174792000,
+       "endTime": 1678181992000,
+       "noOfHours": 2,
+       "durationCost": 600.00
+     }
+]
 ```
