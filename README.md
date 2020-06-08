@@ -14,6 +14,7 @@
 ### View Documentation About All Endpoints
 [http://localhost:8080/billablehours-api/swagger-ui.html](http://localhost:8080/billablehours-api/swagger-ui.html)
 ### Run All Tests
+> "docker-compose build" already runs all the tests but if you still want, then just type code below in your root directory
 ```$xslt
 ./gradlew test
 ```
