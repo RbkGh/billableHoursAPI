@@ -1,6 +1,6 @@
 package com.techustle.models
 
-import java.math.BigInteger
+import java.math.BigDecimal
 
 /**
  *
@@ -11,9 +11,9 @@ import java.math.BigInteger
  */
 class EmployeeRecordForCompanyInvoice(
         var employeeID: Long,
-        var totalNoOfHours:Int,
-        var unitPrice: BigInteger,
-        var totalCostOfWork: BigInteger
+        var totalNoOfHours: Int,
+        var unitPrice: BigDecimal,
+        var totalCostOfWork: BigDecimal
 ) {
 
 }

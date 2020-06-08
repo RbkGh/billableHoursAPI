@@ -1,5 +1,6 @@
 # billableHours API - compute billable hours that lawyers have worked on projects
 ### Shot For 100% Code Coverage
+![alt text](https://github.com/RbkGh/billableHoursAPI/blob/master/demo_test.png)
 ### Requirements
 > Kotlin V1.3.72+ <br>
 > docker V18.09.2+ <br>

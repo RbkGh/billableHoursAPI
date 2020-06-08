@@ -15,4 +15,6 @@ import java.util.*
 @Repository
 interface EmployeeWorkLogRepository : CrudRepository<EmployeeWorkLog, Long> {
     fun findAllByUser_IdAndDateOfDayBetween(userID: Long, startDate: Date, endDate: Date): List<EmployeeWorkLog>
+
+    fun findAllByCompany_IdAndDateOfDayBetween(companyID:Long,startDate: Date,endDate: Date):List<EmployeeWorkLog>
 }

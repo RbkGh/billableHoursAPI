@@ -1,7 +1,7 @@
 package com.techustle.models
 
 import com.techustle.db.Company
-import java.math.BigInteger
+import java.math.BigDecimal
 
 /**
  *
@@ -16,6 +16,6 @@ data class CompanyInvoiceResponse(
         /**
          * total amount that the company owes the law firm after all employee bills have been collated for the week
          */
-        var totalCompanyBillCost:BigInteger
+        var totalCompanyBillCost:BigDecimal
 ) {
 }

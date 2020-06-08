@@ -2,6 +2,7 @@ package com.techustle.db
 
 
 import java.math.BigDecimal
+import java.math.BigInteger
 import java.sql.Timestamp
 import java.util.*
 import javax.persistence.*

@@ -1,5 +1,6 @@
 package com.techustle.db
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 import javax.persistence.*
@@ -18,9 +19,10 @@ class User(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long,
+
         var email: String,
         var dateCreated: Date,
-        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+        //@JsonIgnore(access = JsonProperty.Access.WRITE_ONLY)
         var password: ByteArray,
         var firstName: String,
         var surName: String,
