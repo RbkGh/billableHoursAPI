@@ -35,6 +35,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.+")
+
     implementation("org.hibernate.validator:hibernate-validator:6.0.2.Final")
     implementation("org.hibernate.validator:hibernate-validator-annotation-processor:6.0.2.Final")
 //    <dependency>

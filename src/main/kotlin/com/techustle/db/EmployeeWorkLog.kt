@@ -19,27 +19,55 @@ class EmployeeWorkLog(
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        private var id: Long,
+        var id: Long?,
 
         @JoinColumn(name = "user_id", referencedColumnName = "id")
         @ManyToOne
-        private var user : User,
+        val user: User?,
 
-        private var billableRate: BigDecimal,
+        val billableRate: BigDecimal?,
 
         @JoinColumn(name = "company_id", referencedColumnName = "id")
         @ManyToOne
-        private var company: Company,
+        val company: Company?,
 
         @Column(name = "date_of_day", nullable = false)
-        private var dateOfDay: Date,
+        val dateOfDay: Date?,
 
-        private var startTime: Timestamp,
+        val startTime: Timestamp?,
 
-        private var endTime: Timestamp,
+        val endTime: Timestamp?,
 
-        private var noOfHours: Int,
+        val noOfHours: Int?,
 
         @Column(nullable = true)
-        private var durationCost: BigDecimal
-)
+        val durationCost: BigDecimal?
+) {
+    constructor() : this(id = null, user = null, billableRate = null, company = null, dateOfDay = null, startTime = null, endTime = null, noOfHours = null, durationCost = null) {}
+
+    data class Builder(
+            var id: Long? = null,
+            var user: User? = null,
+            var billableRate: BigDecimal? = null,
+            var company: Company? = null,
+            var dateOfDay: Date? = null,
+            var startTime: Timestamp? = null,
+            var endTime: Timestamp? = null,
+            var noOfHours: Int? = null,
+            var durationCost: BigDecimal? = null) {
+
+        fun id(id: Long) = apply { this.id = id }
+        fun user(user: User) = apply { this.user = user }
+        fun billableRate(billableRate: BigDecimal) = apply { this.billableRate = billableRate }
+        fun company(company: Company) = apply { this.company = company }
+        fun dateOfDay(dateOfDay: Date) = apply { this.dateOfDay = dateOfDay }
+        fun startTime(startTime: Timestamp) = apply { this.startTime = startTime }
+        fun endTime(endTime: Timestamp) = apply { this.endTime = endTime }
+        fun noOfHours(noOfHours: Int) = apply { this.noOfHours = noOfHours }
+        fun durationCost(durationCost: BigDecimal) = apply { this.durationCost = durationCost }
+
+
+        fun build() = EmployeeWorkLog(id, user, billableRate, company, dateOfDay, startTime, endTime, noOfHours, durationCost)
+    }
+
+}

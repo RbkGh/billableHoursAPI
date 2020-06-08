@@ -1,6 +1,8 @@
 package com.techustle.exceptions
 
+import org.springframework.http.HttpStatus
 import org.springframework.validation.Errors
+import org.springframework.web.bind.annotation.ResponseStatus
 
 /**
  *
@@ -9,4 +11,5 @@ import org.springframework.validation.Errors
  * Time: 04:10
  *
  */
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 class InvalidRequestException(val errors: Errors) : RuntimeException("")

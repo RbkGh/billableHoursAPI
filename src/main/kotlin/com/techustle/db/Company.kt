@@ -15,11 +15,10 @@ class Company(
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        private var id: Long,
+        var id: Long,
 
-        private var companyName: String,
+        var companyName: String,
 
-
-        @OneToMany(cascade = [CascadeType.ALL],mappedBy = "company")
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "company")
         private var employeeWorkLogList: List<EmployeeWorkLog>
 )

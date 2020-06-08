@@ -18,4 +18,5 @@ data class LoginResponse( private val tokenKey: String) {
     init {
         token = tokenKey
     }
+    constructor() : this("")
 }

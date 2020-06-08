@@ -1,11 +1,15 @@
 package com.techustle.configuration
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.common.collect.ImmutableList
+import com.techustle.db.repository.UserRepository
 import com.techustle.security.CustomUserDetailsService
 import com.techustle.security.JWTSecurityAuthenticationEntryPoint
 import com.techustle.security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -77,7 +81,7 @@ class WebSecurityConfiguration(private val customUserDetailsService: CustomUserD
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/v1/auth/**","/app/**")
+                .antMatchers("/api/v1/auth/**", "/app/**")
                 .permitAll()
                 .antMatchers("/api/v1/user/checkUsernameAvailability",
                         "/api/user/checkEmailAvailability")
@@ -118,5 +122,14 @@ class WebSecurityConfiguration(private val customUserDetailsService: CustomUserD
     @Bean
     override fun authenticationManager(): AuthenticationManager {
         return super.authenticationManager()
+    }
+
+    @Bean
+    fun mappingJackson2HttpMessageConverter(): MappingJackson2HttpMessageConverter {
+        return MappingJackson2HttpMessageConverter().apply {
+            this.objectMapper = ObjectMapper().apply {
+                registerModule(KotlinModule())
+            }
+        }
     }
 }

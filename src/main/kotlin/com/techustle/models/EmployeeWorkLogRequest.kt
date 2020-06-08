@@ -2,6 +2,7 @@ package com.techustle.models
 
 import java.math.BigDecimal
 import java.sql.Timestamp
+import java.time.Instant
 import java.util.*
 
 /**
@@ -14,19 +15,15 @@ import java.util.*
 data class EmployeeWorkLogRequest(var userID: Long) {
 
 
-    var id: Long = 0
+    //var id: Long = 0
 
     var billableRate: BigDecimal = BigDecimal.ZERO
 
     var companyID: Long = 0
 
-    var dateOfDay: Date? = null
+    var dateOfDay: Date = Date()
 
-    var startTime: Timestamp? = null
+    var startTime: Timestamp = Timestamp.from(Instant.now())
 
-    private var endTime: Timestamp? = null
-
-    init {
-        id = userID
-    }
+    var endTime: Timestamp = Timestamp.from(Instant.now())
 }
