@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import javax.annotation.security.RolesAllowed
 
 /**
  *
@@ -46,22 +47,20 @@ class LawyerController {
 
     @GetMapping("{userID}/timesheet")
     fun getLawyerTimesheet(@PathVariable userID: Long,
-                           @RequestParam(value="startDate",required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") startDate: Date,
-                           @RequestParam(value="endDate",required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") endDate: Date):ResponseEntity<*>{
+                           @RequestParam(value = "startDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") startDate: Date,
+                           @RequestParam(value = "endDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") endDate: Date): ResponseEntity<*> {
 
         if (!lawyerService.isUserPresent(userID))
             throw EntityNotFoundCustomException("User does not exist")
 
-        var lawyerLOGS = lawyerService.getLawyerWorkLogsForTimeRange(startDate,endDate,userID)
-        print("rodney------------------")
-        for (law in lawyerLOGS) {
-            print("law.id============\n")
-        }
+        var lawyerLOGS = lawyerService.getLawyerWorkLogsForTimeRange(startDate, endDate, userID)
+
         return ResponseEntity.status(HttpStatus.OK).body<Any>(lawyerLOGS)
     }
 
+    @RolesAllowed("ROLE_FINANCE_ADMIN")
     @GetMapping("/timesheet")
-    fun getAllLawyerTimeSheets():ResponseEntity<*>{
+    fun getAllLawyerTimeSheets(): ResponseEntity<*> {
         return ResponseEntity.ok().body<Any>(lawyerService.getAllLawyerWorkLogs())
     }
 

@@ -58,16 +58,6 @@ class LawyerControllerTest {
     var userID: Long? = null
     var companyID: Long? = null
 
-
-//    companion object{
-//
-//        @BeforeTestClass
-//        @JvmStatic
-//        internal fun beforeAll(){
-//
-//        }
-//    }
-
     @Test
     fun `test lawyer bill record creation and expect 201 status code`() {
 
@@ -97,32 +87,76 @@ class LawyerControllerTest {
     }
 
     @Test
-    fun `test lawyer timesheets expect 404 status code`() {
-//        initDBData()
+    fun `test lawyer timesheets expect 400 status code`() {
         getJWT()
 
         mockMvc.get("/api/v1/lawyer/6780/timesheet") {
             contentType = MediaType.APPLICATION_JSON
             accept = MediaType.APPLICATION_JSON
-            param("startDate",Date().toString())
-            param("endDate",Date().toString())
+            param("startDate", Date().toString())
+            param("endDate", Date().toString())
             header("Authorization", "Bearer $TOKEN")
         }.andExpect {
             status {
-                isNotFound
+                isBadRequest
             }
         }
     }
 
     @Test
-    fun `test lawyer timesheets expect 200 status code`() {
+    fun `test lawyer timesheets according to date range expect 200 status code`() {
         getJWT()
+
+        val date = Calendar.getInstance().time
+        val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val startDate = dateFormat.format(date).toString()
+        val endDate = dateFormat.format(date).toString()
+
+        print("\n\n\tStart Date =$startDate\n\n\n==========")
+
+        for (user in userRepository.findAll()) {
+            print("\n user id = \t${user.id}\n")
+        }
 
         mockMvc.get("/api/v1/lawyer/$userID/timesheet") {
             contentType = MediaType.APPLICATION_JSON
             accept = MediaType.APPLICATION_JSON
-            param("startDate",Date().toString())
-            param("endDate",Date().toString())
+            param("startDate", startDate)
+            param("endDate", endDate)
+            header("Authorization", "Bearer $TOKEN")
+        }.andExpect {
+            status {
+                isOk
+            }
+        }
+    }
+
+    @Test
+    fun `test all lawyer timesheets with user with LAWYER role and expect 403 forbidden`() {
+        getJWT()
+
+        mockMvc.get("/api/v1/lawyer/timesheet") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+            param("startDate", Date().toString())
+            param("endDate", Date().toString())
+            header("Authorization", "Bearer $TOKEN")
+        }.andExpect {
+            status {
+                isForbidden
+            }
+        }
+    }
+
+    @Test
+    fun `test all lawyer timesheets with FINANCE ADMINISTRATOR ROLE expect 200 status code`() {
+        getJWTForFinanceAdmin()
+
+        mockMvc.get("/api/v1/lawyer/timesheet") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+            param("startDate", Date().toString())
+            param("endDate", Date().toString())
             header("Authorization", "Bearer $TOKEN")
         }.andExpect {
             status {
@@ -141,7 +175,6 @@ class LawyerControllerTest {
     }
 
     fun convertDateToString(date: Date): String {
-        //val date = Calendar.getInstance().time
         val dateFormat: DateFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
         return dateFormat.format(date)
     }
@@ -169,7 +202,6 @@ class LawyerControllerTest {
                 , "Rodney"
                 , "Boachie"
                 , Date()
-                //, Sex.MALE
                 , true
                 , listOf(roleRepository.findByRoleName(RoleName.ROLE_LAWYER)))
 
@@ -180,7 +212,6 @@ class LawyerControllerTest {
                 , "Kwaku"
                 , "John"
                 , Date()
-                //, Sex.MALE
                 , true
                 , listOf(roleRepository.findByRoleName(RoleName.ROLE_FINANCE_ADMIN)))
 
@@ -202,7 +233,24 @@ class LawyerControllerTest {
     fun getJWT() {
         var loginRequest = LoginRequest(username = "lawyer1@gmail.com", password = "pass1234")
 
-        //var userID: Long = 1
+        val mvcResult: MvcResult = mockMvc.post("/api/v1/auth/signin") {
+            contentType = MediaType.APPLICATION_JSON
+            content = mapper.writeValueAsString(loginRequest)
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isOk }
+        }.andReturn()
+
+        val contentAsString: String = mvcResult.response.contentAsString
+        val loginResponse: LoginResponse = mapper.readValue(contentAsString, LoginResponse::class.java)
+
+        TOKEN = loginResponse.token
+        userID = loginResponse.id
+
+    }
+
+    fun getJWTForFinanceAdmin() {
+        var loginRequest = LoginRequest(username = "finance1@gmail.com", password = "pass1234")
 
         val mvcResult: MvcResult = mockMvc.post("/api/v1/auth/signin") {
             contentType = MediaType.APPLICATION_JSON
@@ -215,7 +263,6 @@ class LawyerControllerTest {
         val contentAsString: String = mvcResult.response.contentAsString
         val loginResponse: LoginResponse = mapper.readValue(contentAsString, LoginResponse::class.java)
 
-        print("loginResponse*************************************" + loginResponse.token)
         TOKEN = loginResponse.token
         userID = loginResponse.id
 

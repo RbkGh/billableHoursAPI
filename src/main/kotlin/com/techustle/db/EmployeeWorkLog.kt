@@ -32,6 +32,7 @@ data class EmployeeWorkLog(
         val company: Company?,
 
         @Column(name = "date_of_day", nullable = false)
+        @Temporal(TemporalType.DATE)
         val dateOfDay: Date?,
 
         val startTime: Timestamp?,
@@ -43,7 +44,6 @@ data class EmployeeWorkLog(
         @Column(nullable = true)
         val durationCost: BigDecimal?
 ) {
-    constructor() : this(id = null, user = null, billableRate = null, company = null, dateOfDay = null, startTime = null, endTime = null, noOfHours = null, durationCost = null) {}
 
     data class Builder(
             var id: Long? = null,

@@ -60,12 +60,7 @@ class LawyerService {
     fun getLawyerWorkLogsForTimeRange(startDate: Date, endDate: Date, userID: Long): List<EmployeeWorkLog> {
 
         val employeeWorkLogList: List<EmployeeWorkLog> =
-                employeeWorkLogRepository.findAllByUser_Id( userID)
-
-        print("hi ther-----------------------")
-        for (emp in employeeWorkLogList){
-            print("\n emp id ---------------------${emp.id}")
-        }
+                employeeWorkLogRepository.findAllByUser_IdAndDateOfDayBetween(userID, startDate, endDate)
 
         return employeeWorkLogList
     }

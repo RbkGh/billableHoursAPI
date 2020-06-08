@@ -167,7 +167,7 @@ GET http://localhost:8080/billablehours-api/api/v1/lawyer/timesheet
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXd5ZXIxQGdtYWlsLmNvbSIsImlhdCI6MTU5MTU1ODg4MywiZXhwIjoxNTkyMTYzNjgzfQ.OKY-SJjgzmKAfKd0HbJyMIxWnJqsgnUayo2M2CDVWdSNzSzldOG8x3rGrrVBBl9K6Rjp_hGQWYFXLNOd2tqtpg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmaW5hbmNlMUBnbWFpbC5jb20iLCJpYXQiOjE1OTE2Mzg1MzEsImV4cCI6MTU5MjI0MzMzMX0.FolHgdDGWDD3nYsbRhYBffpHcHfLegefBEZSMhQWgqElKwRV4M2bENZhmqQvkNU7qdhkW4MmGSz6jMx2hOqp8w
 
 ```
 > Response 
