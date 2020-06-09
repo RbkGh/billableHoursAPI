@@ -188,46 +188,48 @@ class LawyerControllerTest {
 
     fun initDBData() {
 
-        var roleLawyer = Role(1, RoleName.ROLE_LAWYER, listOf())
-        var roleFinanceAdmin = Role(2, RoleName.ROLE_FINANCE_ADMIN, listOf())
+        if (userRepository.findAll().toList().isEmpty()) {
 
-        roleRepository.save(roleLawyer)
-        roleRepository.save(roleFinanceAdmin)
+            var roleLawyer = Role(1, RoleName.ROLE_LAWYER, listOf())
+            var roleFinanceAdmin = Role(2, RoleName.ROLE_FINANCE_ADMIN, listOf())
+
+            roleRepository.save(roleLawyer)
+            roleRepository.save(roleFinanceAdmin)
 
 
-        var user = User(1
-                , "lawyer1@gmail.com"
-                , Date()
-                , "\$2a\$12\$nMLHAGaJRd/DBhVF5RvlyelxbhxmeHrfQL25eNojwHam26LVMzqoK".trimIndent().toByteArray()
-                , "Rodney"
-                , "Boachie"
-                , Date()
-                , true
-                , listOf(roleRepository.findByRoleName(RoleName.ROLE_LAWYER)))
+            var user = User(1
+                    , "lawyer1@gmail.com"
+                    , Date()
+                    , "\$2a\$12\$nMLHAGaJRd/DBhVF5RvlyelxbhxmeHrfQL25eNojwHam26LVMzqoK".trimIndent().toByteArray()
+                    , "Rodney"
+                    , "Boachie"
+                    , Date()
+                    , true
+                    , listOf(roleRepository.findByRoleName(RoleName.ROLE_LAWYER)))
 
-        var userFinance = User(2
-                , "finance1@gmail.com"
-                , Date()
-                , "\$2a\$12\$nMLHAGaJRd/DBhVF5RvlyelxbhxmeHrfQL25eNojwHam26LVMzqoK".trimIndent().toByteArray()
-                , "Kwaku"
-                , "John"
-                , Date()
-                , true
-                , listOf(roleRepository.findByRoleName(RoleName.ROLE_FINANCE_ADMIN)))
+            var userFinance = User(2
+                    , "finance1@gmail.com"
+                    , Date()
+                    , "\$2a\$12\$nMLHAGaJRd/DBhVF5RvlyelxbhxmeHrfQL25eNojwHam26LVMzqoK".trimIndent().toByteArray()
+                    , "Kwaku"
+                    , "John"
+                    , Date()
+                    , true
+                    , listOf(roleRepository.findByRoleName(RoleName.ROLE_FINANCE_ADMIN)))
 
-        val userLawyer = userRepository.save(user)
-        userID = userLawyer.id
+            val userLawyer = userRepository.save(user)
+            userID = userLawyer.id
 
-        userRepository.save(userFinance)
+            userRepository.save(userFinance)
 
-        var company = Company(1, "MTN", listOf())
-        var company2 = Company(2, "gbc", listOf())
+            var company = Company(1, "MTN", listOf())
+            var company2 = Company(2, "gbc", listOf())
 
-        var companySaved = companyRepository.save(company)
-        companyID = companySaved.id
+            var companySaved = companyRepository.save(company)
+            companyID = companySaved.id
 
-        companyRepository.save(company2)
-
+            companyRepository.save(company2)
+        }
     }
 
     fun getJWT() {

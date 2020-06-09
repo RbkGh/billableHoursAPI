@@ -1,4 +1,4 @@
-FROM gradle:5.6.3-jdk8 as builder
+FROM gradle:6.5-jdk8 as builder
 # To work with gradle in container,we need a root user
 USER root
 ENV APP_HOME=/usr/app/

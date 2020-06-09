@@ -5,30 +5,42 @@
 > Kotlin V1.3.72+ <br>
 > docker V18.09.2+ <br>
 > docker-compose v1.23.2+
-### Quick Start - Run With Docker
-```$xslt
- 1. docker-compose build
- 2. docker-compose up [Make sure nothing is running on port 8080] <br>
- 
-```
-> You can now access API on http://localhost:8080/billablehours-api
-### View Documentation About All Endpoints
-[http://localhost:8080/billablehours-api/swagger-ui.html](http://localhost:8080/billablehours-api/swagger-ui.html)
+### For a quick introduction to the project design decisions,architecture,trade-offs and others, listen to this audio 
+:point_down: :point_down: :point_down:
+> [Right Here](https://bit.ly/BillableAPI)  :point_left: :point_left: <br>
+:point_up: :point_up: :point_up: 
+
 ### Run All Tests
-> "docker-compose build" already runs all the tests but if you still want, then just type code below in your root directory
+> just type code below in your root directory,no need to have gradle installed on your machine as we are using the wrapper
 ```$xslt
 ./gradlew test
 ```
+### Quick Run(Gradle)
+```$xslt
+./gradlew bootRun
+```
+### Quick Start - Run With Docker [If you are running with docker instead,then change the active profile property in application.properties to "prod"]
+```$xslt
+
+ 1. docker-compose build
+ 2. docker-compose up [Make sure nothing is running on port 8080] 
+ 
+```
+> Once you use the docker ,You can now access API on http://localhost:8080/billablehours-api , not http://localhost:8080/ <br>
+> Note, you should be able to run all the sample responses below and get the same result.
+### View Documentation About All Endpoints
+[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
 
 ### Default Credentials 
 ```$xslt
-Role => Lawyer 
 username = lawyer1@gmail.com
 password = pass1234
+Role => Lawyer 
 
-Role => Finance Administrator
 username = finance1@gmail.com
 password = pass1234
+Role => Finance Administrator
 
 ```
 
@@ -36,7 +48,7 @@ password = pass1234
 #### Authentication or signin 
 > Request
 ```$xslt
-POST http://localhost:8080/billablehours-api/api/v1/auth/signin
+POST http://localhost:8080/api/v1/auth/signin
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -62,7 +74,7 @@ Content-Type: application/json
 ### Create Lawyer Billable Work Log
 >Request
 ```$xslt
-POST http://localhost:8080/billablehours-api/api/v1/lawyer/1/bill
+POST http://localhost:8080/api/v1/lawyer/1/bill
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -100,7 +112,7 @@ Response code: 201; Time: 229ms; Content length: 0 bytes
 ### Get Lawyer Billable Work Period Within Time Range (Week,Month or Whatever)
 > Request 
 ```$xslt
-GET http://localhost:8080/billablehours-api/api/v1/lawyer/1/timesheet?startDate=2023-03-07&endDate=2023-03-07
+GET http://localhost:8080/api/v1/lawyer/1/timesheet?startDate=2023-03-07&endDate=2023-03-07
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -109,7 +121,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXd5ZXIxQGdtYWlsLmNvbSIsI
 ```
 > Response 
 ```$xslt
-GET http://localhost:8080/billablehours-api/api/v1/lawyer/1/timesheet?startDate=2023-03-07&endDate=2023-03-07
+GET http://localhost:8080/api/v1/lawyer/1/timesheet?startDate=2023-03-07&endDate=2023-03-07
 
 HTTP/1.1 200 
 Vary: Origin
@@ -165,7 +177,7 @@ Connection: keep-alive
 
 > Request 
 ```$xslt
-GET http://localhost:8080/billablehours-api/api/v1/lawyer/timesheet
+GET http://localhost:8080/api/v1/lawyer/timesheet
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -174,7 +186,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmaW5hbmNlMUBnbWFpbC5jb20iL
 ```
 > Response 
 ```$xslt
-GET http://localhost:8080/billablehours-api/api/v1/lawyer/timesheet
+GET http://localhost:8080/api/v1/lawyer/timesheet
 
 HTTP/1.1 200 
 Vary: Origin
@@ -255,4 +267,69 @@ Connection: keep-alive
        "durationCost": 600.00
      }
 ]
+```
+
+### 
+> Request : 
+```$xslt
+GET http://localhost:8080/api/v1/finance/company/1/invoice?startDate=2020-06-07&endDate=2020-06-07
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmaW5hbmNlMUBnbWFpbC5jb20iLCJpYXQiOjE1OTE2Mzg1MzEsImV4cCI6MTU5MjI0MzMzMX0.FolHgdDGWDD3nYsbRhYBffpHcHfLegefBEZSMhQWgqElKwRV4M2bENZhmqQvkNU7qdhkW4MmGSz6jMx2hOqp8w
+
+```
+
+> Response Sample: 
+```$xslt
+
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 09 Jun 2020 05:39:47 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+{
+  "company": {
+    "id": 1,
+    "companyName": "MTN"
+  },
+  "employeeBillRecords": [
+    {
+      "employeeID": 1,
+      "totalNoOfHours": 2,
+      "unitPrice": 300.00,
+      "totalCostOfWork": 600.00
+    }
+  ],
+  "totalCompanyBillCost": 600.0
+}
+
+Response code: 200; Time: 237ms; Content length: 173 bytes
+
+```
+
+> As you can see, everything has already been logically calculated on the backend.
+> meaning that any frontend engineer can pick the API and implement in a shortwhile
+
+# Kubernetes(k8s) deployment 
+```
+// first, set active profile to prod for google kubernetes or prod for amazon eks in application.properties
+docker build -t dockerrodneykb2/bha-api-server-backend:latest -t dockerrodneykb2/bha-api-server-backend:latest . --file=Dockerfile 
+docker push dockerrodneykb2/bha-api-server-backend:latest
+kubect rollout restart deploy bha-api-server-backend-deployment
+
+// if a different id is logged in you can do 
+docker logout // this will log the account out
+// then you can do 
+docker login // this will request new username and password to authenticate,that's all.
 ```

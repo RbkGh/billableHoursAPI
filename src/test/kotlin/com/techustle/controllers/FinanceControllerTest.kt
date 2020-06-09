@@ -58,7 +58,7 @@ class FinanceControllerTest {
     var userID: Long? = null
     var companyID: Long? = 0
 
-    @Test
+    //@Test
     fun `test getting complete invoice data json and expect 400 status code`() {
 
         initDBData()
@@ -81,15 +81,13 @@ class FinanceControllerTest {
     }
 
 
-
-
     fun initDBData() {
 
         if (userRepository.findAll().toList().isEmpty()) {
 
 
             var roleLawyer = Role(1, RoleName.ROLE_LAWYER, listOf())
-            var roleFinanceAdmin = Role(2, RoleName.ROLE_FINANCE_ADMIN, listOf())
+            val roleFinanceAdmin = Role(2, RoleName.ROLE_FINANCE_ADMIN, listOf())
 
             roleRepository.save(roleLawyer)
             roleRepository.save(roleFinanceAdmin)
@@ -130,8 +128,8 @@ class FinanceControllerTest {
 
             var companySaved2 = companyRepository.save(company2)
             companyID = companySaved2.id
-        }
 
+        }
 
     }
 
